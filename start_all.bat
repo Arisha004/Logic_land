@@ -1,6 +1,5 @@
 @echo off
-setlocal enabledelayedexpansion
-title LogicLand Startup
+title LogicLand
 echo.
 echo  =============================================
 echo    LogicLand - Full Stack Start
@@ -8,54 +7,47 @@ echo  =============================================
 echo.
 
 set ROOT=%~dp0
-set BACKEND=%ROOT%backend
-set FRONTEND=%ROOT%frontend
-set PKGS_DIR=%ROOT%py_packages
 
-:: ── Install Python packages to LOCAL folder ────────────────────────
-echo [1/3] Installing backend packages to local folder...
-if not exist "%PKGS_DIR%" mkdir "%PKGS_DIR%"
-pip install fastapi uvicorn sqlalchemy psycopg2-binary "python-jose[cryptography]" "passlib[bcrypt]" "pydantic[email]" python-multipart python-dotenv langchain-anthropic langchain-core --target "%PKGS_DIR%" --quiet --disable-pip-version-check 2>nul
-echo [OK] Packages ready
-
-:: ── Seed the database ─────────────────────────────────────────────
-echo.
-echo [2/3] Seeding database...
-cd /d "%BACKEND%"
-set PYTHONPATH=%PKGS_DIR%
-python seed.py 2>nul && echo [OK] Demo user seeded || echo [OK] Demo user already exists
-
-:: ── Start Backend ──────────────────────────────────────────────────
-echo.
-echo [3/3] Starting servers...
-echo Starting backend on http://localhost:8000 ...
-start "LogicLand - Backend" cmd /k "set PYTHONPATH=%PKGS_DIR% && cd /d "%BACKEND%" && python -m uvicorn main:app --host 0.0.0.0 --port 8000 --reload"
-echo Waiting for backend...
-timeout /t 5 /nobreak >nul
-
-:: ── Start Frontend ─────────────────────────────────────────────────
-echo Starting frontend on http://localhost:3000 ...
-cd /d "%FRONTEND%"
-
-if not exist "node_modules" (
-    echo Installing npm packages...
-    npm install
+:: Install Python packages if not already done
+if not exist "%ROOT%py_packages\fastapi" (
+    echo [1/2] Installing backend packages (first time only)...
+    if not exist "%ROOT%py_packages" mkdir "%ROOT%py_packages"
+    pip install fastapi uvicorn sqlalchemy psycopg2-binary "python-jose[cryptography]" "passlib[bcrypt]" "pydantic[email]" python-multipart python-dotenv langchain-anthropic langchain-core --target "%ROOT%py_packages" --quiet
+    echo [OK] Done
+) else (
+    echo [1/2] Backend packages already installed
 )
 
-:: Use npx to run next - avoids the bash script issue on Windows
-start "LogicLand - Frontend" cmd /k "cd /d "%FRONTEND%" && npx next dev"
+:: Install npm packages if missing
+if not exist "%ROOT%frontend\node_modules" (
+    echo [2/2] Installing frontend packages (first time only)...
+    cd /d "%ROOT%frontend"
+    npm install
+) else (
+    echo [2/2] Frontend packages already installed
+)
 
-:: ── Done ───────────────────────────────────────────────────────────
+echo.
+echo Starting both servers in separate windows...
+echo.
+
+:: Start backend in its own window using the dedicated script
+start "LogicLand Backend" cmd /k "%ROOT%run_backend.bat"
+
+timeout /t 6 /nobreak >nul
+
+:: Start frontend in its own window
+start "LogicLand Frontend" cmd /k "%ROOT%run_frontend.bat"
+
 echo.
 echo  =============================================
-echo   LogicLand is starting!
+echo   Both servers starting in new windows!
 echo.
-echo   App:       http://localhost:3000
-echo   API Docs:  http://localhost:8000/docs
+echo   App:      http://localhost:3000
+echo   API:      http://localhost:8000/docs
+echo   Demo:     demo@logicland.io / Demo1234!
 echo.
-echo   Demo: demo@logicland.io / Demo1234!
-echo.
-echo   Wait 20 seconds then open the browser.
+echo   Wait ~20 seconds for Next.js to compile.
 echo  =============================================
 echo.
 timeout /t 20 /nobreak >nul
