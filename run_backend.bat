@@ -18,7 +18,7 @@ if not exist "venv" (
     )
 )
 
-:: Install dependencies
+:: Install/update dependencies
 echo Installing/verifying dependencies...
 venv\Scripts\pip install -q -r requirements.txt
 if errorlevel 1 (
@@ -27,9 +27,9 @@ if errorlevel 1 (
     exit /b 1
 )
 
-:: Seed the database
-echo Seeding database...
-venv\Scripts\python seed.py
+:: Reset demo user with fresh password hash
+echo Setting up demo user...
+venv\Scripts\python reset_demo.py
 echo.
 
 echo Starting FastAPI on http://localhost:8000
