@@ -1,13 +1,12 @@
 from dotenv import load_dotenv
 load_dotenv()
 
-from fastapi import FastAPI, Depends
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
-from database.models import create_tables, SessionLocal
-from database import get_db
-from sqlalchemy.orm import Session
+from database.models import create_tables
 from routers import auth, dashboard, profile, ai_tutor
+import traceback
 
 app = FastAPI(
     title="LogicLand API",
@@ -17,11 +16,20 @@ app = FastAPI(
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000","http://localhost:3001","http://localhost:3002"],
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+@app.exception_handler(Exception)
+async def global_exception_handler(request: Request, exc: Exception):
+    error_detail = traceback.format_exc()
+    print("GLOBAL ERROR:", error_detail)
+    return JSONResponse(
+        status_code=500,
+        content={"error": str(exc), "detail": error_detail},
+    )
 
 @app.on_event("startup")
 def startup():
@@ -40,11 +48,6 @@ def root():
 def health():
     return {"status": "healthy"}
 
-@app.get("/test-db")
-def test_db(db: Session = Depends(get_db)):
-    try:
-        from database.models import User
-        user = db.query(User).filter(User.email == "demo@logicland.io").first()
-        return {"status": "ok", "user": user.email if user else "not found"}
-    except Exception as e:
-        return JSONResponse(status_code=500, content={"error": str(e)})
+@app.get("/test")
+def test():
+    return {"status": "test ok"}
