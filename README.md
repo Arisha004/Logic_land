@@ -7,7 +7,6 @@ Built with Next.js, FastAPI, and Neon PostgreSQL.
 
 ## ▶️ How to Run (Every Time)
 
-> `start_all.bat` does NOT work — just use two terminals as shown below.
 
 ### Terminal 1 — Start Backend
 ```cmd
@@ -114,8 +113,6 @@ Without a key the app still works — Logi uses pre-written hints.
 
 ---
 
-## 🌿 Branch
-All code is on the `main` branch.
 
 ---
 
