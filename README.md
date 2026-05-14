@@ -1,102 +1,123 @@
-# 🌿 LogicLand
+# 🌿 LogicLand — AI-Powered Learning Platform for Kids
 
-A full-stack educational platform with a FastAPI backend and Next.js frontend.
-
----
-
-## 🚀 Quick Start
-
-### Windows (Recommended)
-
-**Option 1 — Double-click:**
-```
-start_all.bat
-```
-
-**Option 2 — PowerShell:**
-```powershell
-powershell -ExecutionPolicy Bypass -File start_all.ps1
-```
-
-### Linux / macOS / Git Bash
-```bash
-bash start_all.sh
-```
+An adaptive, game-based coding education platform for children aged 8–16.
+Built with Next.js, FastAPI, and Neon PostgreSQL.
 
 ---
 
-## 📋 Prerequisites
+## ▶️ How to Run (Every Time)
 
-| Tool | Version | Download |
-|------|---------|----------|
-| Python | 3.10+ | https://www.python.org (✅ check "Add to PATH") |
-| Node.js | 18+ | https://nodejs.org |
+> `start_all.bat` does NOT work — just use two terminals as shown below.
+
+### Terminal 1 — Start Backend
+```cmd
+cd d:\logicland\backend
+venv\Scripts\uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+```
+
+### Terminal 2 — Start Frontend
+```cmd
+cd d:\logicland\frontend
+npm run dev
+```
+
+Then open → **http://localhost:3000**
 
 ---
 
-## 🌐 URLs After Starting
+## 🔧 First Time Setup Only
 
-| Service | URL |
-|---------|-----|
-| App | http://localhost:3000 |
+Run these once when you first clone the project:
+
+### Backend setup
+```cmd
+cd d:\logicland\backend
+python -m venv venv
+venv\Scripts\pip install -r requirements.txt
+venv\Scripts\python seed.py
+```
+
+### Frontend setup
+```cmd
+cd d:\logicland\frontend
+npm install
+```
+
+---
+
+## 🔑 Demo Login
+```
+Email:    demo@logicland.io
+Password: Demo1234!
+```
+
+---
+
+## 📄 Pages
+
+| Page | URL |
+|------|-----|
+| Landing | http://localhost:3000 |
+| Login | http://localhost:3000/login |
+| Register | http://localhost:3000/register |
+| Dashboard | http://localhost:3000/dashboard |
+| Profile | http://localhost:3000/profile |
 | API Docs | http://localhost:8000/docs |
 
 ---
 
-## 🎮 Demo Login
+## ✨ Features Built
 
-| Field | Value |
-|-------|-------|
-| Email | demo@logicland.io |
-| Password | Demo1234! |
+### 🏠 Landing Page (`/`)
+- Animated 3D background with Three.js
+- Scrolling ticker, testimonials, pricing section
+- Interactive puzzle demo
+- **Login** and **Register** buttons in navbar linked to app
 
----
+### 📊 Dashboard (`/dashboard`)
+- XP points, streak, accuracy, leaderboard rank
+- 6 CS module cards with progress bars
+  - Variables, Loops, Conditionals, Functions, Data Flow, How AI Thinks
+- Weekly XP bar chart
+- Logi AI personalised tip
+- Badges earned, recent activity feed
+- Today's summary panel
 
-## ⚙️ Configuration
+### 👤 Profile (`/profile`)
+- View XP level bar and skill level
+- Edit name, age, avatar (15 emoji options)
+- Stats: badges, modules mastered, streak days
 
-### Backend (`backend/.env`)
-```
-DATABASE_URL=postgresql://...    # Your Neon DB URL
-SECRET_KEY=your-secret-key
-ANTHROPIC_API_KEY=sk-ant-...     # Your Anthropic API key
-```
-
-### Frontend (`frontend/.env.local`)
-```
-NEXT_PUBLIC_API_URL=http://localhost:8000
-```
-
----
-
-## 📁 Project Structure
-
-```
-logicland/
-├── start_all.bat          ← Windows one-click launcher
-├── start_all.ps1          ← Windows PowerShell launcher
-├── start_all.sh           ← Linux/macOS/Git Bash launcher
-├── start_backend.bat/.sh  ← Backend only
-├── start_frontend.bat/.sh ← Frontend only
-├── backend/               ← FastAPI + SQLAlchemy
-│   ├── main.py
-│   ├── routers/
-│   ├── services/
-│   ├── database/
-│   └── requirements.txt
-└── frontend/              ← Next.js + Tailwind
-    ├── src/app/
-    ├── src/components/
-    └── package.json
-```
+### 🔐 Auth (`/login`, `/register`)
+- JWT-based login and registration
+- 7-day persistent sessions via cookies
+- New accounts auto-seeded with demo progress
 
 ---
 
-## 🛠️ Run Individually
+## 🗄️ Database
 
-### Backend only
-- Windows: `start_backend.bat`
-- Linux/Mac: `bash start_backend.sh`
+Uses **Neon** (cloud PostgreSQL) — no local database needed.
+Connection is pre-configured in `backend/.env`.
 
-### Frontend only
-- Windows: `start_frontend.bat`
-- Linux/Mac: `bash start_frontend.sh`
+Tables: `users` · `badges` · `module_progress` · `puzzle_sessions`
+
+---
+
+## 🤖 AI Tutor (Logi)
+
+To enable live AI responses, add your key to `backend/.env`:
+```
+ANTHROPIC_API_KEY=sk-ant-your-key-here
+```
+Without a key the app still works — Logi uses pre-written hints.
+
+---
+
+## 🌿 Branch
+All code is on the `main` branch.
+
+---
+
+*SZABIST University — Artificial Intelligence 2026*
+Arisha Mumtaz (2312358) & Farheen Imam (2312363) · 
