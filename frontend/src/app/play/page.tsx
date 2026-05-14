@@ -1,9 +1,12 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
+import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "motion/react";
 import toast from "react-hot-toast";
+import Cookies from "js-cookie";
 import { aiApi } from "@/lib/api";
 import Sidebar from "@/components/layout/Sidebar";
+import { useAuthStore } from "@/store/authStore";
 
 interface Puzzle {
   id: number;
@@ -85,6 +88,8 @@ const PUZZLES: Puzzle[] = [
 const MODULES = ["All", "Variables", "Loops", "Conditionals", "Functions"];
 
 export default function PlayPage() {
+  const router = useRouter();
+  const { init } = useAuthStore();
   const [filter, setFilter] = useState("All");
   const [idx, setIdx] = useState(0);
   const [selected, setSelected] = useState<number | null>(null);
@@ -100,7 +105,10 @@ export default function PlayPage() {
   const [chatLoading, setChatLoading] = useState(false);
   const chatEndRef = useRef<HTMLDivElement>(null);
 
+  useEffect(() => { init(); }, [init]);
   useEffect(() => {
+    if (!Cookies.get("token")) router.replace("/login");
+  }, [router]);
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [chatHistory]);
