@@ -10,13 +10,13 @@ Built with Next.js, FastAPI, and Neon PostgreSQL.
 
 ### Terminal 1 — Start Backend
 ```cmd
-cd d:\logicland\backend
+cd backend
 venv\Scripts\uvicorn main:app --host 0.0.0.0 --port 8000 --reload
 ```
 
 ### Terminal 2 — Start Frontend
 ```cmd
-cd d:\logicland\frontend
+cd frontend
 npm run dev
 ```
 
@@ -30,7 +30,7 @@ Run these once when you first clone the project:
 
 ### Backend setup
 ```cmd
-cd d:\logicland\backend
+cd backend
 python -m venv venv
 venv\Scripts\pip install -r requirements.txt
 venv\Scripts\python seed.py
@@ -38,7 +38,7 @@ venv\Scripts\python seed.py
 
 ### Frontend setup
 ```cmd
-cd d:\logicland\frontend
+cd frontend
 npm install
 ```
 
