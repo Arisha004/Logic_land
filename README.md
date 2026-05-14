@@ -5,7 +5,7 @@ Built with Next.js, FastAPI, and Neon PostgreSQL.
 
 ---
 
-## ▶️ How to Run (Every Time)
+##  How to Run (Every Time)
 
 
 ### Terminal 1 — Start Backend
@@ -24,7 +24,7 @@ Then open → **http://localhost:3000**
 
 ---
 
-## 🔧 First Time Setup Only
+##  First Time Setup Only
 
 Run these once when you first clone the project:
 
@@ -44,7 +44,7 @@ npm install
 
 ---
 
-## 🔑 Demo Login
+##  Demo Login
 ```
 Email:    demo@logicland.io
 Password: Demo1234!
@@ -52,7 +52,7 @@ Password: Demo1234!
 
 ---
 
-## 📄 Pages
+##  Pages
 
 | Page | URL |
 |------|-----|
@@ -65,15 +65,15 @@ Password: Demo1234!
 
 ---
 
-## ✨ Features Built
+##  Features Built
 
-### 🏠 Landing Page (`/`)
+###  Landing Page (`/`)
 - Animated 3D background with Three.js
 - Scrolling ticker, testimonials, pricing section
 - Interactive puzzle demo
 - **Login** and **Register** buttons in navbar linked to app
 
-### 📊 Dashboard (`/dashboard`)
+###  Dashboard (`/dashboard`)
 - XP points, streak, accuracy, leaderboard rank
 - 6 CS module cards with progress bars
   - Variables, Loops, Conditionals, Functions, Data Flow, How AI Thinks
@@ -82,19 +82,19 @@ Password: Demo1234!
 - Badges earned, recent activity feed
 - Today's summary panel
 
-### 👤 Profile (`/profile`)
+###  Profile (`/profile`)
 - View XP level bar and skill level
 - Edit name, age, avatar (15 emoji options)
 - Stats: badges, modules mastered, streak days
 
-### 🔐 Auth (`/login`, `/register`)
+###  Auth (`/login`, `/register`)
 - JWT-based login and registration
 - 7-day persistent sessions via cookies
 - New accounts auto-seeded with demo progress
 
 ---
 
-## 🗄️ Database
+##  Database
 
 Uses **Neon** (cloud PostgreSQL) — no local database needed.
 Connection is pre-configured in `backend/.env`.
@@ -103,18 +103,14 @@ Tables: `users` · `badges` · `module_progress` · `puzzle_sessions`
 
 ---
 
-## 🤖 AI Tutor (Logi)
+##  AI Tutor (Logi)
 
 To enable live AI responses, add your key to `backend/.env`:
 ```
-ANTHROPIC_API_KEY=sk-ant-your-key-here
+Gemini_key=sk-ant-your-key-here
 ```
 Without a key the app still works — Logi uses pre-written hints.
 
----
-
-
----
 
 *SZABIST University — Artificial Intelligence 2026*
 Arisha Mumtaz (2312358) & Farheen Imam (2312363) · 
