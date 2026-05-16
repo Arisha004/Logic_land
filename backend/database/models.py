@@ -9,7 +9,7 @@ import os
 
 DATABASE_URL = os.getenv(
     "DATABASE_URL",
-    "postgresql://neondb_owner:xxxxxxxxxxxxxxxxxxxxxxxxxx.us-east-1.aws.neon.tech/neondb?sslmode=require"
+    "placeholder"
 )
 
 # sslmode=require is already set in DATABASE_URL query string
